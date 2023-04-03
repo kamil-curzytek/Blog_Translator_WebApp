@@ -1,6 +1,6 @@
 # BLOG & TRANSLATOR WEB APP
 
-PYTHON
+PYTHON <br >
 django, sqlite3, html, bootstrap
 
 # Description
