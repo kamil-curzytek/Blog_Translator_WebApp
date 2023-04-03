@@ -1,0 +1,98 @@
+VIRTUAL ENVIRONMENT
+
+A virtual environment is a Python tool for dependency management and project isolation. 
+They allow Python site packages (third party libraries) to be installed locally in an isolated directory for a particular project, 
+as opposed to being installed globally (i.e. as part of a system-wide Python).
+
+1. terminal -> new terminal -> python -m venv env (creates virtual environment folder with Python, we do not touch this folder)
+2. ctrl + shift + p -> select interpreter -> choose the python 3.10.5 ('env':'venv')
+3. No if we run new terminal we can see (env) before first line - it means that we use virtual environment
+4. If we now e.g pip install something it will be installed only for env python, not for our global python
+
+BLOG APP
+
+5. type in the terminal -> django-admin startproject mysite .  -> to start the django project
+6. python manage.py runserver -> running the webpage (empty in the beginning ofc)
+7. python manage.py migrate -> command which generates sql file with tables storing users permissions etc., 
+every data in django is stored in sqllite3 by default
+
+8. Create admin rights to modify the page -> python manage.py createsuperuser
+kamx95
+testitmail95
+
+9. Setting empty app -> python manage.py startapp blog -> "blog" folder will be created, migration folder contains 
+all the databases changes etc., we do not modify any of it
+Webpage has 3 components: models (database field) -> views (python function or class) -> HTML Template
+
+10. Add new app name 'blog' to the settings.py file INSTALLED_APPS
+11. Create new class in models.py
+12. Add class to sql -> python manage.py makemigrations
+13  Add class to sql -> python manage.py migrate
+We can see that table blog_post was created in database with all the fields we wanted to have 
+(blog_post -> blog - app name, post - class name)
+
+14. Create html template
+Create new folder: templates
+Inside templates we create: blog.html
+In html code use variables from models.py class, sql table
+add TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates') to the settings.py (add import os in the header)
+add TEMPLATES_DIR to the TEMPLATES dictionary as the value to the DIRS key
+
+15. Connect HTML template with models.py - create view in views.py
+*add manually some data to database from sql browser to test it -> blog_post table
+
+16. Create url patterns
+Create urls.py in blog folder (it's the app urls.py, another urls.py file is in the mysite folder)
+Add path('', include('blog.urls')) to the urls.py in the mysite folder
+
+17. Configure admin page to have possibility to add a Post
+Add admin.site.register(Post) in admin.py
+
+18. Configure about page
+Add about.html to templates
+Add path('about/', views.AboutView.as_view(), name='about_view') to urls.py
+Create new AboutView class in view.py
+
+19. Configure Homepage
+Add index.html to templates
+Add path('', views.PostList.as_view(), name='home') to urls.py
+Create PostList class in view.py
+
+20. Add links to blogs in homepage in index.html
+
+21. Use bootstramp to style the html pages
+Integrate Bootstramp (paste two links from bootstramp page to index.html file)
+Use bootstramp webpage to see all the functions which are provided (e.g. container, card)
+
+22. Template filters - a lot of django filters to implement
+e.g. slice "400" which shows 400 first characters of the content (visible in index.html)
+
+23. Template inheritance - making navigation bar on every page
+create base.html which is the parent now
+put {% extend 'base.html' %} in every child page instead of all the head / bootstramp code
+put {% block content %} / {% endblock content %} in base.html and all the children pages
+index.html and the rest are the children now
+
+24. Styling of the navigation menu with bootstramp inside the base.html
+
+TRANSLATOR APP
+
+Create empty app:
+1. python manage.py startapp translator (new folder is created)
+2. mysite -> settings.py -> add 'translator' to INSTALLED_APPS
+
+Create page:
+3. Create translator.html file
+
+Create url:
+4. In urls.py create new pattern
+5. Create new file urls.py in translator folder and copy the code from urls.py from blog folder
+6. Modify the code accordingly
+
+Creating a form:
+7. translator folder -> views.py -> create function
+8. include dynamic variables in translator.html (original text, output text)
+
+Implementing translator:
+9. Install googletrans (pip install googletrans==4.0.0-rc1)
+10. create translate.py app inside translator folder
